@@ -1,13 +1,3 @@
-generator client {
-  provider = "prisma-client-js"
-  output   = "./generated/main"
-}
-
-datasource db1 {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
-}
-
 model TestUser {
   id        Int     @id @default(autoincrement())
   email     String  @unique
@@ -15,6 +5,7 @@ model TestUser {
   lastName  String? @map("last_name")
   social    Json?
   isAdmin   Boolean @default(false) @map("is_admin")
+  posts  Post[]
 
   @@map("test_user")
 }
