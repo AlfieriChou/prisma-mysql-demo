@@ -1,20 +1,33 @@
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient as MainPrismaClient } from './prisma/generated/main'
+import { PrismaClient as reportPrismaClient } from './prisma/generated/report'
 
-const prisma = new PrismaClient()
+const mainClient = new MainPrismaClient()
+const reportClient = new reportPrismaClient()
 
 const main = async () => {
   // Connect the client
-  await prisma.$connect()
+  await mainClient.$connect()
+  await reportClient.$connect()
 
-  await prisma.testUser.create({
+  await mainClient.testUser.create({
     data: {
       email: 'hello@prisma.com',
     },
   })
 
-  const allUsers = await prisma.testUser.findMany({})
+  const allUsers = await mainClient.testUser.findMany({})
 
   console.log(allUsers)
+
+  await reportClient.log.create({
+    data: {
+      description: 'hello@prisma.com',
+    },
+  })
+
+  const logs = await reportClient.log.findMany({})
+
+  console.log(logs)
 }
 
 main()
@@ -22,5 +35,6 @@ main()
     throw e
   })
   .finally(async () => {
-    await prisma.$disconnect()
+    await mainClient.$disconnect()
+    await reportClient.$disconnect()
   })

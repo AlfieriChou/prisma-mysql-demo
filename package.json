@@ -6,8 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node --inspect -r ts-node/register index.ts",
-    "dev:migrate": "prisma migrate dev --name ",
-    "migrate": "npx prisma migrate deploy"
+    "dev:main:migrate": "prisma migrate dev --schema prisma/main.prisma --name main_",
+    "dev:report:migrate": "prisma migrate dev --schema prisma/report.prisma --name report_",
+    "main:migrate": "npx prisma migrate deploy --schema prisma/main.prisma",
+    "report:migrate": "npx prisma migrate deploy --schema prisma/report.prisma"
   },
   "repository": {
     "type": "git",
