@@ -11,8 +11,10 @@ datasource db1 {
 model TestUser {
   id        Int     @id @default(autoincrement())
   email     String  @unique
-  firstName String?
-  lastName  String?
+  firstName String? @map("first_name")
+  lastName  String? @map("last_name")
   social    Json?
-  isAdmin   Boolean @default(false)
+  isAdmin   Boolean @default(false) @map("is_admin")
+
+  @@map("test_user")
 }
