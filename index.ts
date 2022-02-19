@@ -1,5 +1,5 @@
-import { PrismaClient as MainPrismaClient } from './prisma/generated/main'
-import { PrismaClient as reportPrismaClient } from './prisma/generated/report'
+import { PrismaClient as MainPrismaClient } from './prisma/clients/main'
+import { PrismaClient as reportPrismaClient } from './prisma/clients/report'
 
 const mainClient = new MainPrismaClient()
 const reportClient = new reportPrismaClient()

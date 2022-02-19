@@ -103,8 +103,8 @@ dist
 # TernJS port file
 .tern-port
 
-# prisma generated
-prisma/generated/
+# prisma clients
+prisma/clients/
 
 # prisma migration
 prisma/migrations/
