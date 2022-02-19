@@ -1,4 +1,4 @@
-import { PrismaClient as MainPrismaClient } from './prisma/clients/main'
+import { PrismaClient as MainPrismaClient, TestUser } from './prisma/clients/main'
 import { PrismaClient as reportPrismaClient } from './prisma/clients/report'
 
 const mainClient = new MainPrismaClient()
@@ -11,13 +11,16 @@ const main = async () => {
 
   await mainClient.testUser.create({
     data: {
-      email: 'hello@prisma.com',
+      email: 'helloworld@prisma.com',
     },
   })
 
   const allUsers = await mainClient.testUser.findMany({})
-
   console.log(allUsers)
+
+  // query
+  const user = await mainClient.$queryRaw<TestUser[]>`SELECT * FROM test_user WHERE id = 1`
+  console.log(user)
 
   await reportClient.log.create({
     data: {
@@ -26,7 +29,6 @@ const main = async () => {
   })
 
   const logs = await reportClient.log.findMany({})
-
   console.log(logs)
 }
 
