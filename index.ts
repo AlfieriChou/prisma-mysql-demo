@@ -9,18 +9,24 @@ const main = async () => {
   await mainClient.$connect()
   await reportClient.$connect()
 
-  await mainClient.testUser.create({
-    data: {
-      email: 'helloworld@prisma.com',
-    },
+  const allUsers = await mainClient.testUser.findMany({
+    include: {
+      posts: true
+    }
   })
-
-  const allUsers = await mainClient.testUser.findMany({})
-  console.log(allUsers)
+  console.log('allUsers: ', allUsers)
 
   // query
-  const user = await mainClient.$queryRaw<TestUser[]>`SELECT * FROM test_user WHERE id = 1`
-  console.log(user)
+  const users = await mainClient.$queryRaw<TestUser[]>`SELECT * FROM test_user WHERE id = 1`
+  console.log('users: ', users)
+
+  if (!users.length) {
+    await mainClient.testUser.create({
+      data: {
+        email: 'helloworld@prisma.com',
+      },
+    })
+  }
 
   await reportClient.log.create({
     data: {
@@ -29,7 +35,7 @@ const main = async () => {
   })
 
   const logs = await reportClient.log.findMany({})
-  console.log(logs)
+  console.log('logs: ', logs)
 }
 
 main()
