@@ -16,10 +16,22 @@ const fieldsToSelect = (fields: string[]) => zipObjectDeep(
   new Array(fields.length).fill(true)
 )
 
+const fieldsToInclude = (fields: string[]) => zipObjectDeep(
+  fields.map(field => {
+    if (field.includes('.')) {
+      return field.replace('.', '.include.')
+    }
+    return field
+  }),
+  new Array(fields.length).fill(true)
+)
+
 const main = async () => {
   // Connect the client
   await mainClient.$connect()
   await reportClient.$connect()
+
+  console.log('include: ', fieldsToInclude(['posts']))
 
   const allUsers = await mainClient.testUser.findMany({
     select: fieldsToSelect(['id', 'email', 'posts.id', 'posts.title'])
