@@ -1,8 +1,20 @@
+import { zipObjectDeep } from 'lodash'
+
 import { PrismaClient as MainPrismaClient, TestUser } from './prisma/clients/main'
 import { PrismaClient as reportPrismaClient } from './prisma/clients/report'
 
 const mainClient = new MainPrismaClient()
 const reportClient = new reportPrismaClient()
+
+const fieldsToSelect = (fields: string[]) => zipObjectDeep(
+  fields.map(field => {
+    if (field.includes('.')) {
+      return field.replace('.', '.select.')
+    }
+    return field
+  }),
+  new Array(fields.length).fill(true)
+)
 
 const main = async () => {
   // Connect the client
@@ -10,9 +22,7 @@ const main = async () => {
   await reportClient.$connect()
 
   const allUsers = await mainClient.testUser.findMany({
-    include: {
-      posts: true
-    }
+    select: fieldsToSelect(['id', 'email', 'posts.id', 'posts.title'])
   })
   console.log('allUsers: ', allUsers)
 
