@@ -3,7 +3,7 @@ generator client {
   output   = "./clients/report"
 }
 
-datasource db2 {
+datasource db {
   provider = "mysql"
   url      = env("REPORT_DATABASE_URL")
 }

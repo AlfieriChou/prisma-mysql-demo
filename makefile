@@ -2,7 +2,10 @@
 DATA_SOURCE ?= main
 MIGRATION_NAME ?= init
 
-catDatasourceFile:
+preCatDatasourceFile:
+	rm -rf prisma/$(DATA_SOURCE).prisma
+
+catDatasourceFile: preCatDatasourceFile
 	cat ./prisma/datasource/$(DATA_SOURCE).prisma >> ./prisma/$(DATA_SOURCE).prisma
 
 catMultiPrismaFile: catDatasourceFile
