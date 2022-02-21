@@ -39,13 +39,37 @@ const main = async () => {
   console.log('allUsers: ', allUsers)
 
   // query
-  const users = await mainClient.$queryRaw<TestUser[]>`SELECT * FROM test_user WHERE id = 1`
+  const testUsers = await mainClient.$queryRaw<TestUser[]>`SELECT * FROM test_user WHERE id = 1`
+  console.log('testUsers: ', testUsers)
+
+  const users = await mainClient.user.findMany({
+    include: {
+      userRoles: true,
+    },
+  })
+
   console.log('users: ', users)
 
-  if (!users.length) {
+  if (!testUsers.length) {
     await mainClient.testUser.create({
       data: {
         email: 'helloworld@prisma.com',
+      },
+    })
+
+    await mainClient.userRole.create({
+      data: {
+        user: {
+          create: {
+            email: 'helloworld@prisma.com'
+          }
+        },
+        role: {
+          create: {
+            name: '管理员',
+            code: 'admin'
+          }
+        }
       },
     })
   }
