@@ -3,8 +3,12 @@ import { zipObjectDeep } from 'lodash'
 import { PrismaClient as MainPrismaClient, TestUser } from './prisma/clients/main'
 import { PrismaClient as reportPrismaClient } from './prisma/clients/report'
 
-const mainClient = new MainPrismaClient()
-const reportClient = new reportPrismaClient()
+const mainClient = new MainPrismaClient({
+  log: ['query'],
+})
+const reportClient = new reportPrismaClient({
+  log: ['query'],
+})
 
 const fieldsToSelect = (fields: string[]) => zipObjectDeep(
   fields.map(field => {
