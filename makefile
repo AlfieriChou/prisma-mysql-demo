@@ -14,3 +14,6 @@ catMultiPrismaFile: catDatasourceFile
 migrate: catMultiPrismaFile
 	prisma migrate dev --schema prisma/$(DATA_SOURCE).prisma --name $(DATA_SOURCE)_$(MIGRATION_NAME)
 	rm -rf prisma/$(DATA_SOURCE).prisma
+
+studio: catMultiPrismaFile
+	sudo prisma studio --schema=prisma/$(DATA_SOURCE).prisma
