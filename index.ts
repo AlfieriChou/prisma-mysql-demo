@@ -48,11 +48,15 @@ const main = async () => {
 
   const users = await mainClient.user.findMany({
     include: {
-      userRoles: true,
+      userRoles: {
+        include: {
+          role: true
+        }
+      }
     },
   })
 
-  console.log('users: ', users)
+  console.log('users: ', JSON.stringify(users, null, 2))
 
   if (!testUsers.length) {
     await mainClient.testUser.create({
