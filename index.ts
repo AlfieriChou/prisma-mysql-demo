@@ -50,7 +50,12 @@ const main = async () => {
     include: {
       userRoles: {
         include: {
-          role: true
+          role: {
+            select: {
+              name: true,
+              code: true
+            }
+          }
         }
       }
     },
