@@ -7,3 +7,12 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+generator jsonSchema {
+  provider = "prisma-json-schema-generator"
+  output = "./jsonSchema/main"
+  keepRelationScalarFields = "true"
+  schemaId = "some-schema-id"
+  includeRequiredFields = "true"
+  persistOriginalType = "true"
+}

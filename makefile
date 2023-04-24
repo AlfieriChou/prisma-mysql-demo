@@ -25,3 +25,6 @@ migrateReset: catMultiPrismaFile
 
 studio: catMultiPrismaFile
 	sudo prisma studio --schema=prisma/$(DATA_SOURCE).prisma
+
+createMysqlContainer:
+	docker run --name docker-mysql -e MYSQL_ROOT_PASSWORD=alfieri -p 3306:3306 -d mysql
