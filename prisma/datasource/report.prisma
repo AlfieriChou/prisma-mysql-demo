@@ -10,7 +10,7 @@ datasource db {
 
 generator jsonSchema {
   provider = "prisma-json-schema-generator"
-  output = "./jsonSchema/main"
+  output = "./jsonSchema/report"
   keepRelationScalarFields = "true"
   schemaId = "some-schema-id"
   includeRequiredFields = "true"
