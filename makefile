@@ -28,3 +28,6 @@ studio: catMultiPrismaFile
 
 createMysqlContainer:
 	docker run --name docker-mysql -e MYSQL_ROOT_PASSWORD=alfieri -p 3306:3306 -d mysql
+
+defaultEnv:
+	echo "DATABASE_URL=mysql://root:alfieri@localhost:3306/test" >> .env
